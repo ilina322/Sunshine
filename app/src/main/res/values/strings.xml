@@ -2,4 +2,5 @@
     <string name="app_name">Sunshine</string>
     <string name="tell_me_the_weather">Tell me the weather!</string>
     <string name="my_cities">My cities</string>
+    <string name="celsius">°C</string>
 </resources>

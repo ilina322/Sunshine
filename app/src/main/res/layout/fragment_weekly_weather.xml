@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_hours"
+        android:id="@+id/rec_days"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>
