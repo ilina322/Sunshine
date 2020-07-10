@@ -11,15 +11,16 @@ import com.example.sunshine.R;
 import com.example.sunshine.data.model.DailyWeather;
 import com.example.sunshine.ui.vewholders.DayWeatherViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DayWeatherAdapter extends RecyclerView.Adapter<DayWeatherViewHolder> {
 
     private List<DailyWeather> data;
+    private DayClickListener listener;
 
-    public DayWeatherAdapter(List<DailyWeather> data){
+    public DayWeatherAdapter(List<DailyWeather> data, DayClickListener listener){
         this.data = data;
+        this.listener = listener;
     }
 
     @NonNull
@@ -27,8 +28,13 @@ public class DayWeatherAdapter extends RecyclerView.Adapter<DayWeatherViewHolder
     public DayWeatherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = (View) LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.item_daily_weather, parent, false);
-        DayWeatherViewHolder viewHolder = new DayWeatherViewHolder(view);
-        return viewHolder;
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick();
+            }
+        });
+        return new DayWeatherViewHolder(view);
     }
 
     @Override
@@ -45,5 +51,9 @@ public class DayWeatherAdapter extends RecyclerView.Adapter<DayWeatherViewHolder
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    public interface DayClickListener {
+        public void onClick();
     }
 }

@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,20 +28,47 @@ public class WeeklyWeatherFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
 
     private List<DailyWeather> dummyData;
+    private DailyWeather dummyToday;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //TODO: switch data from the following method with real data from api
         setDummyData();
+
         View view = inflater.inflate(R.layout.fragment_weekly_weather, container, false);
+        setupDaysRecView(view);
+        setupTodayViews(view);
+        return view;
+    }
+
+    private void setupDaysRecView(View view) {
         recDays = (RecyclerView) view.findViewById(R.id.rec_days);
         recDays.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recDays.setLayoutManager(layoutManager);
-        daysAdapter = new DayWeatherAdapter(dummyData);
+        daysAdapter = new DayWeatherAdapter(dummyData, new DayWeatherAdapter.DayClickListener() {
+            @Override
+            public void onClick() {
+                loadDailyWeatherFragment();
+            }
+        });
         recDays.setAdapter(daysAdapter);
-        return view;
+    }
+
+    private void loadDailyWeatherFragment() {
+        //TODO: make fragment transaction to a daily fragment when one exists
+    }
+
+    private void setupTodayViews(View view){
+        TextView txtTemperature = view.findViewById(R.id.txt_today_temperature);
+        ImageView imgCondition = view.findViewById(R.id.img_today_condition);
+        double todayTemperature = dummyToday.getAvgTemperature();
+        String todayCondition = dummyToday.getCondition();
+        String formatTodayTemperature = todayTemperature + getString(R.string.celsius);
+        txtTemperature.setText(formatTodayTemperature);
+        imgCondition.setImageResource(R.drawable.ic_cloudy_day);
     }
 
     private void setDummyData() {
@@ -60,8 +90,9 @@ public class WeeklyWeatherFragment extends Fragment {
         dummy1.setCondition("");
         dummy1.setCondition("");
 
-        dummyData.add(dummy1);
         dummyData.add(dummy2);
         dummyData.add(dummy3);
+
+        dummyToday = dummy1;
     }
 }
