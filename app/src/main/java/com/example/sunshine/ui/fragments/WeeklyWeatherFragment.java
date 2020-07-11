@@ -21,7 +21,7 @@ import com.example.sunshine.ui.adapters.DayWeatherAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeeklyWeatherFragment extends Fragment {
+public class WeeklyWeatherFragment extends Fragment implements DayWeatherAdapter.ItemClickListener {
 
     private RecyclerView recDays;
     private RecyclerView.Adapter daysAdapter;
@@ -48,17 +48,8 @@ public class WeeklyWeatherFragment extends Fragment {
         recDays.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         recDays.setLayoutManager(layoutManager);
-        daysAdapter = new DayWeatherAdapter(dummyData, new DayWeatherAdapter.DayClickListener() {
-            @Override
-            public void onClick() {
-                loadDailyWeatherFragment();
-            }
-        });
+        daysAdapter = new DayWeatherAdapter(dummyData, this);
         recDays.setAdapter(daysAdapter);
-    }
-
-    private void loadDailyWeatherFragment() {
-        //TODO: make fragment transaction to a daily fragment when one exists
     }
 
     private void setupTodayViews(View view){
@@ -70,6 +61,20 @@ public class WeeklyWeatherFragment extends Fragment {
         txtTemperature.setText(formatTodayTemperature);
         imgCondition.setImageResource(R.drawable.ic_cloudy_day);
     }
+
+    @Override
+    public void onItemClicked(DailyWeather dailyWeather) {
+        loadDailyWeatherFragment();
+    }
+
+    private void loadDailyWeatherFragment() {
+        DailyWeatherFragment weeklyWeatherFragment = new DailyWeatherFragment();
+        weeklyWeatherFragment.setArguments(getActivity().getIntent().getExtras());
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, weeklyWeatherFragment);
+        transaction.commit();
+    }
+
 
     private void setDummyData() {
         dummyData = new ArrayList<DailyWeather>();

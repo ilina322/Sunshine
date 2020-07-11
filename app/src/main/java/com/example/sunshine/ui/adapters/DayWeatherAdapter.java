@@ -16,9 +16,9 @@ import java.util.List;
 public class DayWeatherAdapter extends RecyclerView.Adapter<DayWeatherViewHolder> {
 
     private List<DailyWeather> data;
-    private DayClickListener listener;
+    private ItemClickListener listener;
 
-    public DayWeatherAdapter(List<DailyWeather> data, DayClickListener listener){
+    public DayWeatherAdapter(List<DailyWeather> data, ItemClickListener listener){
         this.data = data;
         this.listener = listener;
     }
@@ -28,24 +28,13 @@ public class DayWeatherAdapter extends RecyclerView.Adapter<DayWeatherViewHolder
     public DayWeatherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = (View) LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.item_daily_weather, parent, false);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onClick();
-            }
-        });
         return new DayWeatherViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DayWeatherViewHolder holder, int position) {
         DailyWeather currentDailyWeather = data.get(position);
-        double temperature = currentDailyWeather.getAvgTemperature();
-        long date = currentDailyWeather.getDate();
-        String condition = currentDailyWeather.getCondition();
-        holder.setTemperature(temperature);
-        holder.setDay(date);
-        holder.setConditionImage(condition);
+        holder.bind(currentDailyWeather, listener);
     }
 
     @Override
@@ -53,7 +42,7 @@ public class DayWeatherAdapter extends RecyclerView.Adapter<DayWeatherViewHolder
         return data.size();
     }
 
-    public interface DayClickListener {
-        public void onClick();
+    public interface ItemClickListener {
+        public void onItemClicked(DailyWeather dailyWeather);
     }
 }

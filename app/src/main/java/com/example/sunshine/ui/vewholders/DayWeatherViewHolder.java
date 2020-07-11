@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sunshine.R;
+import com.example.sunshine.data.model.DailyWeather;
+import com.example.sunshine.ui.adapters.DayWeatherAdapter;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -38,5 +40,18 @@ public class DayWeatherViewHolder extends RecyclerView.ViewHolder {
         ImageView imgCondition = (ImageView) view.findViewById(R.id.img_condition);
         //TODO: set image according to condition, this can be done after finding out what the conditions can be
         imgCondition.setImageResource(R.drawable.ic_moon);
+    }
+
+    public void bind(final DailyWeather dailyWeather, final DayWeatherAdapter.ItemClickListener listener){
+        setTemperature(dailyWeather.getAvgTemperature());
+        setDay(dailyWeather.getDate());
+        setConditionImage(dailyWeather.getCondition());
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClicked(dailyWeather);
+            }
+        });
     }
 }
