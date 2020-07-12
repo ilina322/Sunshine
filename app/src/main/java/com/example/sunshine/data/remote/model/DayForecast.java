@@ -1,6 +1,6 @@
-package com.example.sunshine.data.model;
+package com.example.sunshine.data.remote.model;
 
-public class HourlyWeather {
+public class DayForecast {
     private float temperature;
     private float chanceOfRain;
     private long time;

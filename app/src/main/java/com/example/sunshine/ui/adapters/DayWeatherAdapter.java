@@ -8,17 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sunshine.R;
-import com.example.sunshine.data.model.DailyWeather;
+import com.example.sunshine.data.remote.model.WeekForecast;
 import com.example.sunshine.ui.vewholders.DayWeatherViewHolder;
 
 import java.util.List;
 
 public class DayWeatherAdapter extends RecyclerView.Adapter<DayWeatherViewHolder> {
 
-    private List<DailyWeather> data;
+    private List<WeekForecast> data;
     private ItemClickListener listener;
 
-    public DayWeatherAdapter(List<DailyWeather> data, ItemClickListener listener){
+    public DayWeatherAdapter(List<WeekForecast> data, ItemClickListener listener){
         this.data = data;
         this.listener = listener;
     }
@@ -33,8 +33,8 @@ public class DayWeatherAdapter extends RecyclerView.Adapter<DayWeatherViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull DayWeatherViewHolder holder, int position) {
-        DailyWeather currentDailyWeather = data.get(position);
-        holder.bind(currentDailyWeather, listener);
+        WeekForecast currentWeekForecast = data.get(position);
+        holder.bind(currentWeekForecast, listener);
     }
 
     @Override
@@ -43,6 +43,6 @@ public class DayWeatherAdapter extends RecyclerView.Adapter<DayWeatherViewHolder
     }
 
     public interface ItemClickListener {
-        public void onItemClicked(DailyWeather dailyWeather);
+        public void onItemClicked(WeekForecast weekForecast);
     }
 }

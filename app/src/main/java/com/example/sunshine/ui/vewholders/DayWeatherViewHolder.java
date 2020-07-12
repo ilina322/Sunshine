@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sunshine.R;
-import com.example.sunshine.data.model.DailyWeather;
+import com.example.sunshine.data.remote.model.WeekForecast;
 import com.example.sunshine.ui.adapters.DayWeatherAdapter;
 
 import java.sql.Timestamp;
@@ -42,15 +42,15 @@ public class DayWeatherViewHolder extends RecyclerView.ViewHolder {
         imgCondition.setImageResource(R.drawable.ic_moon);
     }
 
-    public void bind(final DailyWeather dailyWeather, final DayWeatherAdapter.ItemClickListener listener){
-        setTemperature(dailyWeather.getAvgTemperature());
-        setDay(dailyWeather.getDate());
-        setConditionImage(dailyWeather.getCondition());
+    public void bind(final WeekForecast weekForecast, final DayWeatherAdapter.ItemClickListener listener){
+        setTemperature(weekForecast.getAvgTemperature());
+        setDay(weekForecast.getDate());
+        setConditionImage(weekForecast.getCondition());
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClicked(dailyWeather);
+                listener.onItemClicked(weekForecast);
             }
         });
     }

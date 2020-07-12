@@ -1,6 +1,6 @@
-package com.example.sunshine.data.model;
+package com.example.sunshine.data.remote.model;
 
-public class DailyWeather {
+public class WeekForecast {
     private double minTemperature;
     private double maxTemperature;
     private double avgTemperature;
