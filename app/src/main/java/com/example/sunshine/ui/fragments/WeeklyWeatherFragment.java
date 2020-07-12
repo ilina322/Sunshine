@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sunshine.R;
 import com.example.sunshine.data.model.DailyWeather;
 import com.example.sunshine.ui.adapters.DayWeatherAdapter;
+import com.example.sunshine.utils.NavigationManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,10 @@ public class WeeklyWeatherFragment extends Fragment implements DayWeatherAdapter
 
     private List<DailyWeather> dummyData;
     private DailyWeather dummyToday;
+
+    public static WeeklyWeatherFragment newInstance() {
+        return new WeeklyWeatherFragment();
+    }
 
     @Nullable
     @Override
@@ -64,15 +69,7 @@ public class WeeklyWeatherFragment extends Fragment implements DayWeatherAdapter
 
     @Override
     public void onItemClicked(DailyWeather dailyWeather) {
-        loadDailyWeatherFragment();
-    }
-
-    private void loadDailyWeatherFragment() {
-        DailyWeatherFragment weeklyWeatherFragment = new DailyWeatherFragment();
-        weeklyWeatherFragment.setArguments(getActivity().getIntent().getExtras());
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, weeklyWeatherFragment);
-        transaction.commit();
+        NavigationManager.getInstance().openDayWeatherScreen(dailyWeather.getDate());
     }
 
 

@@ -15,8 +15,14 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.sunshine.R;
+import com.example.sunshine.utils.NavigationManager;
 
 public class SearchFragment extends Fragment {
+
+    public static SearchFragment newInstance() {
+        return new SearchFragment();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,16 +37,8 @@ public class SearchFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadWeeklyWeatherFragment();
+                NavigationManager.getInstance().openWeekWeatherScreen();
             }
         });
-    }
-
-    private void loadWeeklyWeatherFragment() {
-        WeeklyWeatherFragment weeklyWeatherFragment = new WeeklyWeatherFragment();
-        weeklyWeatherFragment.setArguments(getActivity().getIntent().getExtras());
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, weeklyWeatherFragment);
-        transaction.commit();
     }
 }

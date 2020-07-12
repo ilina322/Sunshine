@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.example.sunshine.R;
 import com.example.sunshine.ui.fragments.SearchFragment;
 import com.example.sunshine.ui.fragments.WeeklyWeatherFragment;
+import com.example.sunshine.utils.NavigationManager;
 
 public class MainActivity extends FragmentActivity {
 
@@ -20,15 +21,9 @@ public class MainActivity extends FragmentActivity {
             if (savedInstanceState != null) {
                 return;
             }
-            loadSearchFragment();
+            NavigationManager.getInstance().setFragmentManager(getSupportFragmentManager());
+            NavigationManager.getInstance().openSearchScreen();
         }
-    }
-
-    private void loadSearchFragment() {
-        SearchFragment searchFragment = new SearchFragment();
-        searchFragment.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, searchFragment).commit();
     }
 
 }

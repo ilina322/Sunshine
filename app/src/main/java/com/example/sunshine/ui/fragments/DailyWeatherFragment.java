@@ -10,8 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.sunshine.R;
+import com.example.sunshine.data.model.DailyWeather;
 
 public class DailyWeatherFragment extends Fragment {
+
+    public static final String PARAM_DATE = "param_date";
+
+
+    public static DailyWeatherFragment newInstance() {
+        return new DailyWeatherFragment();
+    }
 
     @Nullable
     @Override
