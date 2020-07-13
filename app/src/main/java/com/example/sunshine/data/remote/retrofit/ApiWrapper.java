@@ -16,17 +16,28 @@ public class ApiWrapper {
     }
 
     /**
-     @param location city and ISO country code, example: "london,uk"
-     @param aggregateHours The interval between weather forecast data in the output. 1 means hourly forecast, 24 means daily forecast
-     @param unitGroup The system of units used for the output data. Supported values are us,uk,metric.
-     @param contentType Can be json or csv
+     @param lat latitude
+     @param lon longitude
+     @param units temperature is available in Fahrenheit, Celsius and kelvin units.
+
+     For temperature in Fahrenheit, units=imperial
+     For temperature in Celsius, units=metric
+     Kelvin is used by default, so there is no need to use the units parameter in the API call if you want this
+
+     @param exclude exclude some parts of the weather data from the API response. It should be a comma-delimited list (without spaces).
+     Available values:
+         current
+         minutely
+         hourly
+         daily
+
      */
-    public void getWeekForecast(String location,
-                                int aggregateHours,
-                                String unitGroup,
-                                String contentType,
+    public void getWeekForecast(double lat,
+                                double lon,
+                                String units,
+                                String exclude,
                                 final ServiceListener<WeekForecastResponse> listener){
-        service.getWeekForecast(location, aggregateHours, unitGroup, contentType).enqueue(new Callback<WeekForecastResponse>() {
+        service.getWeekForecast(lat, lon, units, exclude, ApiService.API_KEY).enqueue(new Callback<WeekForecastResponse>() {
             @Override
             public void onResponse(Call<WeekForecastResponse> call, Response<WeekForecastResponse> response) {
                 if(response.isSuccessful()){
